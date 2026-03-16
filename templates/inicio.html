@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="text-center">
+
+    <img src="{% static 'img/logo.png' %}" alt="Logo sistema" width="140" class="mb-4">
+
+    <h1 class="mb-3">Sistema de Librería</h1>
+
+    <p class="lead">
+        Plataforma para gestionar autores, libros y usuarios del politecnico Colombiano Jaime Isaza Cadavid
+    </p>
+
+
+    <div class="mt-4 d-flex justify-content-center">
+
+        <form action="{% url 'reporte_autor' %}" method="get" class="w-50">
+
+            <div class="input-group">
+
+                <input 
+                    type="number"
+                    name="cedula"
+                    class="form-control"
+                    placeholder="Buscar autor..."
+                    required
+                >
+
+                <button class="btn btn-dark" type="submit">
+                    Buscar
+                </button>
+
+            </div>
+
+            <small class="text-muted">
+                búsqueda por cédula
+            </small>
+
+        </form>
+
+    </div>
+
+    {% if user.is_authenticated and user.perfil.rol == 'ADMIN' %}
+    <div class="mt-4 d-flex justify-content-center gap-3">
+
+        <a href="{% url 'historial_actividad' %}" class="btn btn-main">Ver historial</a>
+
+        <a href="{% url 'lista_autores' %}" class="btn btn-dark">
+            Gestionar autores
+        </a>
+
+        <a href="{% url 'lista_libros' %}" class="btn btn-dark">
+            Gestionar libros
+        </a>
+
+        {% if user.is_authenticated and user.perfil.rol == 'ADMIN' %}
+        <a href="{% url 'lista_usuarios' %}" class="btn btn-dark">
+            Gestionar usuarios
+        </a>
+        {% endif %}
+    {% endif %}
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2>{{ titulo }}</h2>
+    <p>Completa la información del autor en el formulario.</p>
+</div>
+
+<div class="content-card form-card">
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Cédula</label>
+            {{ form.cedula }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            {{ form.nombre }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Nacionalidad</label>
+            {{ form.nacionalidad }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Fecha de nacimiento</label>
+            {{ form.fecha_nacimiento }}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-main">Guardar</button>
+            <a href="{% url 'lista_autores' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

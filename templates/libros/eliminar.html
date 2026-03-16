@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2>Eliminar libro</h2>
+    <p>Confirma si deseas eliminar este registro del catálogo.</p>
+</div>
+
+<div class="content-card delete-card">
+    <h4 class="mb-3">¿Eliminar libro?</h4>
+    <p>Estás a punto de eliminar el libro <strong>{{ libro.titulo }}</strong>.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-actions justify-content-center">
+            <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+            <a href="{% url 'lista_libros' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

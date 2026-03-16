@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2>{{ titulo }}</h2>
+    <p>Gestiona los datos de acceso y rol del usuario.</p>
+</div>
+
+<div class="content-card form-card">
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Nombre de usuario</label>
+            {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Correo electrónico</label>
+            {{ form.email }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            {{ form.password }}
+            <div class="form-text">Si estás editando y no deseas cambiar la contraseña, déjala vacía.</div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Rol</label>
+            {{ form.rol }}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-main">Guardar</button>
+            <a href="{% url 'lista_usuarios' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

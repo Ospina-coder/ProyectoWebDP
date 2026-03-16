@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Reporte de autor por cédula</h2>
+
+<form method="get" class="mb-4">
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Cédula del autor</label>
+            <input type="text" name="cedula" class="form-control" value="{{ cedula }}" required>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-dark">Buscar</button>
+        </div>
+    </div>
+</form>
+
+{% if cedula %}
+    {% if autor %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4>Datos del autor</h4>
+                <p><strong>Cédula:</strong> {{ autor.cedula }}</p>
+                <p><strong>Nombre:</strong> {{ autor.nombre }}</p>
+                <p><strong>Nacionalidad:</strong> {{ autor.nacionalidad }}</p>
+                <p><strong>Fecha de nacimiento:</strong> {{ autor.fecha_nacimiento }}</p>
+            </div>
+        </div>
+
+        <h4>Libros asociados</h4>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>ISBN</th>
+                    <th>Editorial</th>
+                    <th>Año de publicación</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for libro in libros %}
+                <tr>
+                    <td>{{ libro.titulo }}</td>
+                    <td>{{ libro.isbn }}</td>
+                    <td>{{ libro.editorial }}</td>
+                    <td>{{ libro.anio_publicacion }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">Este autor no tiene libros registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning">
+            No se encontró un autor con esa cédula.
+        </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

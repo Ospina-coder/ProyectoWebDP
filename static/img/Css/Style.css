@@ -1,0 +1,178 @@
+body{
+    background-color: #F5F7F6;
+    color: #2C2C2C;
+}
+
+/* Navbar */
+
+.navbar{
+    background-color: #1B6B3C !important;
+}
+
+.navbar-brand,
+.navbar-nav .nav-link{
+    color: white !important;
+}
+
+.navbar-nav .nav-link:hover{
+    color: #F2C94C !important;
+}
+
+/* Botones principales */
+
+.btn-dark{
+    background-color: #2E8B57;
+    border-color: #2E8B57;
+}
+
+.btn-dark:hover{
+    background-color: #146B3A;
+    border-color: #146B3A;
+}
+
+/* Botones secundarios */
+
+.btn-warning{
+    background-color: #F2C94C;
+    border-color: #F2C94C;
+    color: #2C2C2C;
+}
+
+/* Tarjetas */
+
+.card{
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.08);
+}
+
+/* Tablas */
+
+.table{
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Títulos */
+
+h1,h2,h3{
+    font-weight: 600;
+}
+
+/* ====== CONTENEDORES GENERALES ====== */
+
+.page-header {
+    background: linear-gradient(135deg, #1B6B3C, #2E8B57);
+    color: white;
+    padding: 24px 28px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.page-header h2 {
+    margin: 0;
+    font-weight: 700;
+}
+
+.page-header p {
+    margin: 6px 0 0 0;
+    opacity: 0.9;
+}
+
+.content-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
+}
+
+/* ====== TABLAS ====== */
+
+.table thead th {
+    background-color: #1B6B3C;
+    color: white;
+    border: none;
+    vertical-align: middle;
+}
+
+.table tbody td {
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f3faf5;
+}
+
+/* ====== BOTONES ====== */
+
+.btn-main {
+    background-color: #2E8B57;
+    border-color: #2E8B57;
+    color: white;
+}
+
+.btn-main:hover {
+    background-color: #146B3A;
+    border-color: #146B3A;
+    color: white;
+}
+
+.btn-soft {
+    background-color: #F2C94C;
+    border-color: #F2C94C;
+    color: #2C2C2C;
+}
+
+.btn-soft:hover {
+    background-color: #ddb53f;
+    border-color: #ddb53f;
+    color: #2C2C2C;
+}
+
+/* ====== FORMULARIOS ====== */
+
+.form-card {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #1f2d1f;
+}
+
+.form-control,
+.form-select {
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* ====== ELIMINAR ====== */
+
+.delete-card {
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.delete-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+/* ====== ESTADOS VACÍOS ====== */
+
+.empty-state {
+    text-align: center;
+    color: #6c757d;
+    padding: 24px 0;
+}

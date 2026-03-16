@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2>{{ titulo }}</h2>
+    <p>Registra o actualiza la información bibliográfica del libro.</p>
+</div>
+
+<div class="content-card form-card">
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Título</label>
+            {{ form.titulo }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">ISBN</label>
+            {{ form.isbn }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Editorial</label>
+            {{ form.editorial }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Año de publicación</label>
+            {{ form.anio_publicacion }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Autor</label>
+            {{ form.autor }}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-main">Guardar</button>
+            <a href="{% url 'lista_libros' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
