@@ -6,6 +6,7 @@ from autores.models import Autor
 from libros.models import Libro
 from django.contrib.auth.models import User
 from django.db.models import Count
+from graphene_django.views import GraphQLView
 
 
 @login_required
@@ -38,4 +39,5 @@ urlpatterns = [
     path("autores/", include("autores.urls")),
     path("libros/", include("libros.urls")),
     path("reportes/", include("reportes.urls")),
+    path("graphql/", GraphQLView.as_view(graphiql=True)),
 ]

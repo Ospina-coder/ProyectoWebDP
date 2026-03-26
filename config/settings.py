@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "autores",
     "libros",
     "reportes",
+    "graphene_django",
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+
+GRAPHENE = {"SCHEMA": "autores.schema.schema"}
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
