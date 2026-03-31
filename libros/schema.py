@@ -2,6 +2,7 @@ import graphene
 from graphene_django.types import DjangoObjectType
 from libros.models import Libro
 from autores.models import Autor
+from libros.services import obtener_datos_libro_por_isbn
 
 
 class AutorType(DjangoObjectType):
@@ -13,7 +14,17 @@ class AutorType(DjangoObjectType):
 class LibroType(DjangoObjectType):
     class Meta:
         model = Libro
-        fields = ("id", "titulo", "isbn", "editorial", "anio_publicacion", "autor")
+        fields = (
+            "id",
+            "titulo",
+            "isbn",
+            "editorial",
+            "anio_publicacion",
+            "autor",
+            "portada_url",
+            "titulo_api",
+            "editorial_api",
+        )
 
 
 class Query(graphene.ObjectType):
@@ -42,12 +53,17 @@ class CreateLibro(graphene.Mutation):
         if Libro.objects.filter(isbn=isbn).exists():
             raise Exception("Ya existe un libro con ese ISBN")
 
+        datos_api = obtener_datos_libro_por_isbn(isbn)
+
         libro = Libro(
             titulo=titulo,
             isbn=isbn,
             editorial=editorial,
             anio_publicacion=anio_publicacion,
             autor=autor,
+            portada_url=datos_api.get("portada_url"),
+            titulo_api=datos_api.get("titulo_api"),
+            editorial_api=datos_api.get("editorial_api"),
         )
         libro.save()
         return CreateLibro(libro=libro)
@@ -77,6 +93,12 @@ class UpdateLibro(graphene.Mutation):
 
         for key, value in kwargs.items():
             setattr(libro, key, value)
+
+            datos_api = obtener_datos_libro_por_isbn(libro.isbn)
+            if datos_api:
+                libro.portada_url = datos_api.get("portada_url")
+                libro.titulo_api = datos_api.get("titulo_api")
+                libro.editorial_api = datos_api.get("editorial_api")
 
         libro.save()
         return UpdateLibro(libro=libro)

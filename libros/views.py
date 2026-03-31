@@ -3,6 +3,7 @@ from .models import Libro
 from .forms import LibroForm
 from django.http import HttpResponseForbidden
 from reportes.views import registrar_actividad
+from .services import obtener_datos_libro_por_isbn
 
 
 def lista_libros(request):
@@ -20,7 +21,15 @@ def crear_libro(request):
     if request.method == "POST":
         form = LibroForm(request.POST)
         if form.is_valid():
-            libro = form.save()
+            libro = form.save(commit=False)
+
+            datos_api = obtener_datos_libro_por_isbn(libro.isbn)
+            if datos_api:
+                libro.portada_url = datos_api.get("portada_url")
+                libro.titulo_api = datos_api.get("titulo_api")
+                libro.editorial_api = datos_api.get("editorial_api")
+
+            libro.save()
 
             registrar_actividad(
                 request.user,
@@ -44,7 +53,15 @@ def editar_libro(request, id):
     if request.method == "POST":
         form = LibroForm(request.POST, instance=libro)
         if form.is_valid():
-            libro = form.save()
+            libro = form.save(commit=False)
+
+            datos_api = obtener_datos_libro_por_isbn(libro.isbn)
+            if datos_api:
+                libro.portada_url = datos_api.get("portada_url")
+                libro.titulo_api = datos_api.get("titulo_api")
+                libro.editorial_api = datos_api.get("editorial_api")
+
+            libro.save()
 
             registrar_actividad(
                 request.user,
