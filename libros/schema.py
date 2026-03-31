@@ -4,7 +4,12 @@ from libros.models import Libro
 from autores.models import Autor
 
 
-# Define el tipo de datos Libro
+class AutorType(DjangoObjectType):
+    class Meta:
+        model = Autor
+        fields = ("id", "cedula", "nombre", "nacionalidad", "fecha_nacimiento")
+
+
 class LibroType(DjangoObjectType):
     class Meta:
         model = Libro
@@ -20,16 +25,23 @@ class Query(graphene.ObjectType):
 
 class CreateLibro(graphene.Mutation):
     class Arguments:
-        titulo = graphene.String()
-        isbn = graphene.String()
-        editorial = graphene.String()
-        anio_publicacion = graphene.Int()
-        autor_id = graphene.Int()
+        titulo = graphene.String(required=True)
+        isbn = graphene.String(required=True)
+        editorial = graphene.String(required=True)
+        anio_publicacion = graphene.Int(required=True)
+        autor_id = graphene.Int(required=True)
 
     libro = graphene.Field(LibroType)
 
     def mutate(self, info, titulo, isbn, editorial, anio_publicacion, autor_id):
-        autor = Autor.objects.get(id=autor_id)
+        try:
+            autor = Autor.objects.get(id=autor_id)
+        except Autor.DoesNotExist:
+            raise Exception("No existe un autor con ese ID")
+
+        if Libro.objects.filter(isbn=isbn).exists():
+            raise Exception("Ya existe un libro con ese ISBN")
+
         libro = Libro(
             titulo=titulo,
             isbn=isbn,
@@ -41,8 +53,51 @@ class CreateLibro(graphene.Mutation):
         return CreateLibro(libro=libro)
 
 
+class UpdateLibro(graphene.Mutation):
+    class Arguments:
+        id = graphene.Int(required=True)
+        titulo = graphene.String()
+        isbn = graphene.String()
+        editorial = graphene.String()
+        anio_publicacion = graphene.Int()
+        autor_id = graphene.Int()
+
+    libro = graphene.Field(LibroType)
+
+    def mutate(self, info, id, **kwargs):
+        libro = Libro.objects.get(id=id)
+
+        if "autor_id" in kwargs:
+            try:
+                autor = Autor.objects.get(id=kwargs["autor_id"])
+                libro.autor = autor
+            except Autor.DoesNotExist:
+                raise Exception("No existe un autor con ese ID")
+            kwargs.pop("autor_id")
+
+        for key, value in kwargs.items():
+            setattr(libro, key, value)
+
+        libro.save()
+        return UpdateLibro(libro=libro)
+
+
+class DeleteLibro(graphene.Mutation):
+    class Arguments:
+        id = graphene.Int(required=True)
+
+    ok = graphene.Boolean()
+
+    def mutate(self, info, id):
+        libro = Libro.objects.get(id=id)
+        libro.delete()
+        return DeleteLibro(ok=True)
+
+
 class Mutation(graphene.ObjectType):
     create_libro = CreateLibro.Field()
+    update_libro = UpdateLibro.Field()
+    delete_libro = DeleteLibro.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
